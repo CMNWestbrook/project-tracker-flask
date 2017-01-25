@@ -7,5 +7,17 @@
 <h1>{{ first }} {{ last }}</h1>
 
 <p>GitHub Account: {{ github }}</p>
+
+<h2> {{ first }}'s project info: </h2>
+
+{% if project_info %}
+
+    <ul> 
+    {% for title, grade in project_info %}
+        <li> Title: {{ title }} | Grade: {{ grade }} </li> <br> 
+      {% endfor %}
+    </ul>
+{% endif %}
+
 </body>
 </html>

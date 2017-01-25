@@ -11,11 +11,15 @@ def get_student():
 
     github = request.args.get('github', 'jhacks')
     first, last, github = hackbright.get_student_by_github(github)
-    html = render_template("student_info.html",
+    project_info = hackbright.get_grades_by_github(github)
+   
+    return render_template("student_info.html",
                            first=first,
                            last=last,
-                           github=github)
-    return html
+                           github=github,
+                           project_info=project_info, 
+                           )
+    
 
 @app.route("/student-search")
 def get_student_form():
@@ -26,24 +30,27 @@ def get_student_form():
 
 @app.route("/student-add")
 def student_add():
-    """Add a student."""
+    """Display form to add a student."""
 
     return render_template("student_creation.html")
 
 
 @app.route("/add_acknowledgement", methods=['POST'])
 def submit_form():
+    """Display add student form output"""
 
     first = request.form.get('first', 'No first name')
     last = request.form.get('last', 'No last name')
     github = request.form.get('github', 'No github')
     hackbright.make_new_student(first, last, github)
 
-    html = render_template("add_student_confirm.html",
+    return render_template("add_student_confirm.html",
                            first=first,
                            last=last,
                            github=github)
-    return html
+
+
+    
 
 
 if __name__ == "__main__":
